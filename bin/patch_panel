@@ -21,7 +21,7 @@ module PatchPanelApp
       dpid = args[0].hex
       port1 = args[1].to_i
       port2 = args[2].to_i
-      Trema.trema_process('PatchPanel', options[:socket_dir]).controller.
+      puts Trema.trema_process('PatchPanel', options[:socket_dir]).controller.
         create_patch(dpid, port1, port2)
     end
   end
@@ -36,8 +36,51 @@ module PatchPanelApp
       dpid = args[0].hex
       port1 = args[1].to_i
       port2 = args[2].to_i
-      Trema.trema_process('PatchPanel', options[:socket_dir]).controller.
+      puts Trema.trema_process('PatchPanel', options[:socket_dir]).controller.
         delete_patch(dpid, port1, port2)
+    end
+  end
+
+  desc 'Creates a new mirror'
+  arg_name 'dpid port#1 port#2'
+  command :create_mirror do |c|
+    c.desc 'Location to find socket files'
+    c.flag [:S, :socket_dir], default_value: Trema::DEFAULT_SOCKET_DIR
+
+    c.action do |_global_options, options, args|
+      dpid = args[0].hex
+      port1 = args[1].to_i
+      port2 = args[2].to_i
+      puts Trema.trema_process('PatchPanel', options[:socket_dir]).controller.
+        create_mirror(dpid, port1, port2)
+    end
+  end
+
+  desc 'Deletes a mirror'
+  arg_name 'dpid port#1 port#2'
+  command :delete_mirror do |c|
+    c.desc 'Location to find socket files'
+    c.flag [:S, :socket_dir], default_value: Trema::DEFAULT_SOCKET_DIR
+
+    c.action do |_global_options, options, args|
+      dpid = args[0].hex
+      port1 = args[1].to_i
+      port2 = args[2].to_i
+      puts Trema.trema_process('PatchPanel', options[:socket_dir]).controller.
+        delete_mirror(dpid, port1, port2)
+    end
+  end
+
+  desc 'Display connection list'
+  arg_name 'dpid'
+  command :dump_connection do |c|
+    c.desc 'Location to find socket files'
+    c.flag [:S, :socket_dir], default_value: Trema::DEFAULT_SOCKET_DIR
+
+    c.action do |_global_options, options, args|
+      dpid = args[0].hex
+      puts Trema.trema_process('PatchPanel', options[:socket_dir]).controller.
+        dump_connection(dpid)
     end
   end
 
