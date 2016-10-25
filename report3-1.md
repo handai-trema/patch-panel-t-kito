@@ -161,6 +161,7 @@ desc 'Display connection list'
 
 ###ポートのミラーリングの削除
 最後に、ポートのミラーリングを削除するメソッドを追加した。ポイントとしては、パッチやミラーリングを作成する時と同様にパッチ情報とミラーリング情報を取得し、合致するルールがない場合には削除を、そうでない場合には削除したルール以外は維持されるようにした。
+```
   def delete_flow_entries(dpid, port_a, port_b)
     actions_a = []
     actions_b = []
@@ -180,5 +181,6 @@ desc 'Display connection list'
                         actions: actions_b)
     end
   end
+```
 
 また、同様の変更をパッチ削除のメソッドにも適用した。
